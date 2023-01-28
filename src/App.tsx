@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Character from './components/Character/Character'
+import Character, { characterElements } from './components/Character/Character'
 import Gallows from './components/Gallows/Gallows'
 import Word from './components/Word'
 import Keyboard, {
@@ -7,6 +7,7 @@ import Keyboard, {
   isKeyboardLetter,
 } from './components/Keyboard/Keyboard'
 import { wordsList } from './components/wordsList'
+import GameOver from './components/GameOver/GameOver'
 import './styles/index.scss'
 import styles from './App.module.scss'
 
@@ -37,11 +38,27 @@ function App() {
     }
   }, [])
 
+  const incorrectLetters = pressedKeys.filter(
+    (letter) => !wordToGuess.includes(letter),
+  )
+
+  const handlePlayAgainClick = () => {
+    setPressedKeys([])
+    setWordToGuess(word.toUpperCase())
+  }
+
+  const isGameOver = incorrectLetters.length >= characterElements.length
+  const isGameWon = Array.from(wordToGuess).every((letter) => {
+    return pressedKeys.some((key) => key === letter)
+  })
+
   return (
     <div className={styles['wrapper']}>
       <div className={styles['left-col']}>
         Left col
-        <Character />
+        <Character progress={incorrectLetters.length} />
+        {isGameOver && <GameOver isWin={false} reset={handlePlayAgainClick} />}
+        {isGameWon && <GameOver isWin={true} reset={handlePlayAgainClick} />}
         <Word word={wordToGuess} pressedKeys={pressedKeys} />
         <Keyboard onKeyClick={handleKeyboardClick} pressedKeys={pressedKeys} />
       </div>

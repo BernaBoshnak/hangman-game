@@ -1,5 +1,5 @@
 import React from 'react'
-import { KeyboardLetter } from './Keyboard'
+import { KeyboardLetter } from './Keyboard/Keyboard'
 import styles from './Word.module.scss'
 
 type WordProps = {
