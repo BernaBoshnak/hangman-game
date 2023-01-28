@@ -1,27 +1,31 @@
 import React from 'react'
 import Head from './Head'
 import Body from './Body'
-import Arm_Left from './Arm_Left'
-import Arm_Right from './Arm_Right'
-import Leg_Left from './Leg_Left'
-import Leg_Right from './Leg_Right'
+import ArmLeft from './ArmLeft'
+import ArmRight from './ArmRight'
+import LegLeft from './LegLeft'
+import LegRight from './LegRight'
 import styles from './Character.module.scss'
+
+export const characterElements = [
+  Head,
+  Body,
+  ArmLeft,
+  ArmRight,
+  LegLeft,
+  LegRight,
+]
 
 type CharacterProps = {
   progress: number
 }
 
-const Character = ({ progress }: CharacterProps) => {
-  return (
-    <div className={styles.character}>
-      {progress >= 1 && <Head />}
-      {progress >= 2 && <Body />}
-      {progress >= 3 && <Arm_Left />}
-      {progress >= 4 && <Arm_Right />}
-      {progress >= 5 && <Leg_Left />}
-      {progress >= 6 && <Leg_Right />}
-    </div>
-  )
-}
+const Character = ({ progress }: CharacterProps) => (
+  <div className={styles.character}>
+    {characterElements.slice(0, progress).map((Component, index) => (
+      <Component key={index} />
+    ))}
+  </div>
+)
 
 export default Character
