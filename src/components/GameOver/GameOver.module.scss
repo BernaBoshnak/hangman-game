@@ -1,0 +1,27 @@
+.container {
+  width: 25%;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 75%;
+  text-align: center;
+}
+
+.title {
+  font-size: 22px;
+  color: white;
+}
+
+.button {
+  padding: 10px 20px;
+  border-radius: 75%;
+  color: white;
+  background-color: rgb(8, 63, 242);
+}
+
+.win {
+  background-color: green;
+}
+
+.lose {
+  background-color: red;
+}
