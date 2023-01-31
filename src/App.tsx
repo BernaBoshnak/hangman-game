@@ -7,18 +7,24 @@ import Keyboard, {
   isKeyboardLetter,
 } from './components/Keyboard/Keyboard'
 import { wordsList } from './components/wordsList'
+import getRandomWordByDifficulty, { Level } from './components/wordGenerator'
 import GameOver from './components/GameOver/GameOver'
 import './styles/index.scss'
 import styles from './App.module.scss'
 
 function App() {
-  // const word = wordsList[Math.floor(Math.random() * wordsList.length)]
-  const word = 'react'
-  const [wordToGuess, setWordToGuess] = useState(word.toUpperCase())
+  const [wordToGuess, setWordToGuess] = useState<string>()
   const [pressedKeys, setPressedKeys] = useState<KeyboardLetter[]>([])
 
   const handleKeyboardClick = (letter: KeyboardLetter) => {
     setPressedKeys([...pressedKeys, letter])
+  }
+
+  const difficultyLevelClick = (difficulty: Level) => {
+    const randomWord = getRandomWordByDifficulty(difficulty, wordsList)
+    randomWord
+      ? setWordToGuess(randomWord.toUpperCase())
+      : alert('Something went wrong, unable to continue the game')
   }
 
   useEffect(() => {
@@ -39,27 +45,33 @@ function App() {
   }, [])
 
   const incorrectLetters = pressedKeys.filter(
-    (letter) => !wordToGuess.includes(letter),
+    (letter) => !wordToGuess?.includes(letter),
   )
 
   const handlePlayAgainClick = () => {
     setPressedKeys([])
-    setWordToGuess(word.toUpperCase())
+    setWordToGuess(undefined)
   }
 
   const isGameOver = incorrectLetters.length >= characterElements.length
-  const isGameWon = Array.from(wordToGuess).every((letter) => {
-    return pressedKeys.some((key) => key === letter)
-  })
+  const isGameWon = Boolean(
+    wordToGuess &&
+      Array.from(wordToGuess).every((letter) => {
+        return pressedKeys.some((key) => key === letter)
+      }),
+  )
 
   return (
     <div className={styles['wrapper']}>
       <div className={styles['left-col']}>
         Left col
         <Character progress={incorrectLetters.length} />
+        <button onClick={() => difficultyLevelClick('easy')}>Easy</button>
+        <button onClick={() => difficultyLevelClick('normal')}>Normal</button>
+        <button onClick={() => difficultyLevelClick('hard')}>Hard</button>
         {isGameOver && <GameOver isWin={false} reset={handlePlayAgainClick} />}
         {isGameWon && <GameOver isWin={true} reset={handlePlayAgainClick} />}
-        <Word word={wordToGuess} pressedKeys={pressedKeys} />
+        {wordToGuess && <Word word={wordToGuess} pressedKeys={pressedKeys} />}
         <Keyboard onKeyClick={handleKeyboardClick} pressedKeys={pressedKeys} />
       </div>
       <div className={styles['right-col']}>
