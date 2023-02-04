@@ -3,12 +3,12 @@ import styles from './GameOver.module.scss'
 
 type GameOverProps = {
   reset: () => void
-  isWin: boolean
+  isWon: boolean
 }
 
-const GameOver = ({ isWin, reset }: GameOverProps) => (
-  <div className={`${styles.container} ${isWin ? styles.win : styles.lose}`}>
-    <h1 className={styles.title}>{isWin ? 'Congratulations!' : 'Game Over'}</h1>
+const GameOver = ({ isWon, reset }: GameOverProps) => (
+  <div className={`${styles.container} ${isWon ? styles.win : styles.lose}`}>
+    <h1 className={styles.title}>{isWon ? 'Congratulations!' : 'Game Over'}</h1>
     <button className={styles.button} onClick={reset}>
       Play Again
     </button>
