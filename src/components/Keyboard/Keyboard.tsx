@@ -9,16 +9,17 @@ export const letters = [
 ] as const
 export type KeyboardLetter = (typeof letters)[number][number]
 
-type KeyboardProps = {
-  onKeyClick: (letter: KeyboardLetter) => void
-  pressedKeys: KeyboardLetter[]
-}
-
 export const isKeyboardLetter = (key: string): key is KeyboardLetter => {
   return letters.flat().some((letter) => key === letter)
 }
 
-const Keyboard = ({ onKeyClick, pressedKeys }: KeyboardProps) => (
+type KeyboardProps = Omit<React.ComponentProps<typeof Key>, 'children'>
+
+const Keyboard = ({
+  onKeyClick,
+  pressedKeys,
+  isKeyboardDisabled,
+}: KeyboardProps) => (
   <div className={styles.container}>
     {letters.map((lettersGroup, index) => {
       return (
@@ -28,6 +29,7 @@ const Keyboard = ({ onKeyClick, pressedKeys }: KeyboardProps) => (
               <Key
                 onKeyClick={onKeyClick}
                 pressedKeys={pressedKeys}
+                isKeyboardDisabled={isKeyboardDisabled}
                 key={letter}
               >
                 {letter}

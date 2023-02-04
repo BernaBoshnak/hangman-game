@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 30% auto;
+  margin: 25%;
   height: 250px;
   width: 620px;
   padding: 10px;
@@ -26,8 +26,8 @@
   background: #8faccd;
 }
 
-.button:hover,
-.button:focus {
+.button:hover:not(:disabled),
+.button:focus:not(:disabled) {
   box-shadow: 0 0 5px rgba(56, 169, 240, 0.75);
   color: white;
 }
