@@ -6,30 +6,50 @@ import Keyboard, {
   KeyboardLetter,
   isKeyboardLetter,
 } from './components/Keyboard/Keyboard'
-import { wordsList } from './components/wordsList'
-import getRandomWordByDifficulty, { Level } from './components/wordGenerator'
+import getWordLengths, { Level } from './word'
 import GameOver from './components/GameOver/GameOver'
+import DifficultyButtons from './components/DifficultyButtons'
+import ErrorMessage from './components/ErrorMessage'
+import getWordFromApi from './fetchWord'
 import './styles/index.scss'
 import styles from './App.module.scss'
 
 function App() {
   const [wordToGuess, setWordToGuess] = useState<string>()
   const [pressedKeys, setPressedKeys] = useState<KeyboardLetter[]>([])
+  const [isRandomWordFound, setIsRandomWordFound] = useState<boolean>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleKeyboardClick = (letter: KeyboardLetter) => {
     setPressedKeys([...pressedKeys, letter])
   }
 
-  const difficultyLevelClick = (difficulty: Level) => {
-    const randomWord = getRandomWordByDifficulty(difficulty, wordsList)
-    randomWord
-      ? setWordToGuess(randomWord.toUpperCase())
-      : alert('Something went wrong, unable to continue the game')
+  const difficultyLevelClick = async (difficulty: Level) => {
+    setIsLoading(true)
+    setIsRandomWordFound(undefined)
+    const { minLength, maxLength } = getWordLengths(difficulty)
+
+    try {
+      const word = await getWordFromApi(minLength, maxLength)
+      console.log(word)
+
+      if (!word) {
+        setIsRandomWordFound(false)
+        return
+      }
+
+      setWordToGuess(word.toUpperCase())
+    } catch (_error) {
+      setIsRandomWordFound(false)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
     function callback(e: KeyboardEvent) {
       const key = e.key.toUpperCase()
+      console.log(key)
 
       if (isKeyboardLetter(key)) {
         setPressedKeys((prevState) => [...prevState, key])
@@ -51,28 +71,46 @@ function App() {
   const handlePlayAgainClick = () => {
     setPressedKeys([])
     setWordToGuess(undefined)
+    setIsRandomWordFound(undefined)
   }
 
-  const isGameOver = incorrectLetters.length >= characterElements.length
+  const isGameLost = incorrectLetters.length >= characterElements.length
   const isGameWon = Boolean(
     wordToGuess &&
       Array.from(wordToGuess).every((letter) => {
         return pressedKeys.some((key) => key === letter)
       }),
   )
+  const isGameOver = isGameLost || isGameWon
 
   return (
     <div className={styles['wrapper']}>
       <div className={styles['left-col']}>
         Left col
+        {isRandomWordFound === false && (
+          <ErrorMessage>Oops, something went wrong. Try again.</ErrorMessage>
+        )}
         <Character progress={incorrectLetters.length} />
-        <button onClick={() => difficultyLevelClick('easy')}>Easy</button>
-        <button onClick={() => difficultyLevelClick('normal')}>Normal</button>
-        <button onClick={() => difficultyLevelClick('hard')}>Hard</button>
-        {isGameOver && <GameOver isWin={false} reset={handlePlayAgainClick} />}
-        {isGameWon && <GameOver isWin={true} reset={handlePlayAgainClick} />}
-        {wordToGuess && <Word word={wordToGuess} pressedKeys={pressedKeys} />}
-        <Keyboard onKeyClick={handleKeyboardClick} pressedKeys={pressedKeys} />
+        {isLoading && <div>Loading...</div>}
+        {!wordToGuess && (
+          <DifficultyButtons difficultyLevelClick={difficultyLevelClick} />
+        )}
+        {isGameLost && <GameOver isWon={false} reset={handlePlayAgainClick} />}
+        {isGameWon && <GameOver isWon={true} reset={handlePlayAgainClick} />}
+        {wordToGuess && (
+          <Word
+            word={wordToGuess}
+            pressedKeys={pressedKeys}
+            unlock={isGameOver}
+          />
+        )}
+        {wordToGuess && (
+          <Keyboard
+            onKeyClick={handleKeyboardClick}
+            pressedKeys={pressedKeys}
+            isKeyboardDisabled={isGameOver}
+          />
+        )}
       </div>
       <div className={styles['right-col']}>
         <div style={{ textAlign: 'center', fontSize: '2rem' }}>Win || Lose</div>
