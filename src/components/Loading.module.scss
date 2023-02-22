@@ -1,0 +1,31 @@
+@import '../styles/variables.scss';
+
+.loader {
+  margin-bottom: 30px;
+  padding: 10px 50px;
+  font-size: 3rem;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 0.3rem;
+  color: $color-success;
+  text-shadow: 1px 1px 0px #3e1521;
+}
+
+@keyframes blink {
+  50% {
+    color: transparent;
+    text-shadow: none;
+  }
+}
+
+.loader__dot {
+  animation: 1s blink infinite;
+}
+
+.loader__dot:nth-child(2) {
+  animation-delay: 250ms;
+}
+
+.loader__dot:nth-child(3) {
+  animation-delay: 500ms;
+}

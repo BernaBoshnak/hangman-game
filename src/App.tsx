@@ -10,6 +10,7 @@ import getWordLengths, { Level } from './word'
 import GameOver from './components/GameOver/GameOver'
 import DifficultyButtons from './components/DifficultyButtons'
 import ErrorMessage from './components/ErrorMessage'
+import Loading from './components/Loading'
 import getWordFromApi from './fetchWord'
 import './styles/index.scss'
 import styles from './App.module.scss'
@@ -86,12 +87,10 @@ function App() {
   return (
     <div className={styles['wrapper']}>
       <div className={styles['left-col']}>
-        Left col
         {isRandomWordFound === false && (
           <ErrorMessage>Oops, something went wrong. Try again.</ErrorMessage>
         )}
-        <Character progress={incorrectLetters.length} />
-        {isLoading && <div>Loading...</div>}
+        {isLoading && <Loading />}
         {!wordToGuess && (
           <DifficultyButtons difficultyLevelClick={difficultyLevelClick} />
         )}
@@ -113,8 +112,8 @@ function App() {
         )}
       </div>
       <div className={styles['right-col']}>
-        <div style={{ textAlign: 'center', fontSize: '2rem' }}>Win || Lose</div>
         <Gallows />
+        <Character progress={incorrectLetters.length} />
       </div>
     </div>
   )
