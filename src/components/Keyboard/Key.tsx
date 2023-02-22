@@ -23,7 +23,7 @@ const Key = ({
       onClick={() => onKeyClick(children)}
       disabled={isButtonDisabled || isKeyboardDisabled}
     >
-      {children}
+      <span className={styles.key}>{children}</span>
     </button>
   )
 }
