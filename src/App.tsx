@@ -112,8 +112,10 @@ function App() {
         )}
       </div>
       <div className={styles['right-col']}>
-        <Gallows />
-        <Character progress={incorrectLetters.length} />
+        <div className="p-relative w-full">
+          <Gallows />
+          <Character progress={incorrectLetters.length} />
+        </div>
       </div>
     </div>
   )
