@@ -1,8 +1,17 @@
 <?php
-// error_reporting(0);    // disable errors on prod
+// error_reporting(0); // disable errors on prod
 error_reporting(-1); // enable errors on dev
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json; charset=utf-8');
+
+function httpResponse(int $statusCode, bool $isOk, array ...$params)
+{
+    http_response_code($statusCode);
+    $responseArray = ['ok' => $isOk, ...$params];
+
+    echo json_encode($responseArray);
+    exit;
+}
 
 function isInteger($input)
 {
@@ -32,9 +41,7 @@ function validateParamKeys()
     $invalidParams = array_diff($requestParams, $validKeys);
 
     if (count($invalidParams)) {
-        http_response_code(400);
-        echo json_encode(['message' => 'Invalid query params!', 'parameters' => $invalidParams, 'ok' => false]);
-        exit;
+        httpResponse(400, false, ['message' => 'Invalid query params!', 'parameters' => $invalidParams]);
     }
 }
 
@@ -83,16 +90,14 @@ $endsWith = validateParamValues('endsWith', 'string', $errors);
 $contains = validateParamValues('contains', 'string', $errors);
 
 if (count($errors)) {
-    http_response_code(400);
-    echo json_encode(['message' => 'Invalid field!', 'fields' => $errors, 'ok' => false]);
-    exit;
+    httpResponse(400, false, ['message' => 'Invalid field!', 'fields' => $errors]);
 }
 
 // Load the noun list
-$json = file_get_contents('nounlist.json');
-$jsonData = json_decode($json, true);
+const WORDS_STR = file_get_contents('nounlist.json');
+const WORDS = json_decode(WORDS_STR, true);
 
-$filteredData = $jsonData;
+$filteredData = WORDS;
 $filteredData = filterBy($filteredData, $minLength, fn($v) => strlen($v) >= $minLength);
 $filteredData = filterBy($filteredData, $maxLength, fn($v) => strlen($v) <= $maxLength);
 $filteredData = filterBy($filteredData, $startsWith, fn($v) => strpos($v, $startsWith) === 0);
@@ -100,15 +105,12 @@ $filteredData = filterBy($filteredData, $endsWith, fn($v) => substr($v, -strlen(
 $filteredData = filterBy($filteredData, $contains, fn($v) => strpos($v, $contains) !== false);
 
 if (!count($filteredData)) {
-    http_response_code(200);
-    echo json_encode(['word' => null, 'ok' => true]);
-    exit;
+    httpResponse(200, true, ['word' => null]);
 }
 
 $filteredData = array_values($filteredData);
 $randomIndex = rand(0, count($filteredData) - 1);
 $randomWord = $filteredData[$randomIndex];
 
-http_response_code(200);
-echo json_encode(['word' => $randomWord, 'ok' => true]);
+httpResponse(200, true, ['word' => $randomWord]);
 ?>
