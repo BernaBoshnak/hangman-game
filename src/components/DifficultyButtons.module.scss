@@ -1,25 +1,26 @@
+@import '../styles/variables.scss';
+
 .buttonsContainer {
   display: flex;
   flex-direction: column;
   gap: 20px;
   justify-content: center;
   align-items: center;
-  margin: 8% auto;
 }
 
 .button {
-  padding: 5px 25px;
+  padding: 3px 22px;
   border: none;
   border-radius: 5px;
-  font-size: 22px;
-  letter-spacing: 2px;
+  font-size: 24px;
+  letter-spacing: 1px;
   text-align: center;
-  color: white;
-  background-color: rgba(255, 109, 138, 0.648);
-  transition: all 300ms ease-in-out;
+  color: $color-secondary;
+  background-color: $color-success;
 }
 
 .button:hover {
-  color: rgba(255, 109, 138, 0.648);
-  background-color: white;
+  color: $color-success;
+  background-color: $color-secondary;
+  transition: 0.3s ease-in-out all;
 }
