@@ -4,11 +4,9 @@ import styles from './Gallows.module.scss'
 
 const Gallows = () => (
   <div className={styles.gallows}>
-    <div
-      className={cn(styles['gallows-common'], styles['gallows-head-holder'])}
-    />
-    <div className={cn(styles['gallows-common'], styles['gallows-top-line'])} />
+    <div className={styles['gallows-rope']} />
     <div className={cn(styles['gallows-common'], styles['gallows-pillar'])} />
+    <div className={cn(styles['gallows-common'], styles['gallows-top-line'])} />
     <div className={cn(styles['gallows-common'], styles['gallows-base'])} />
   </div>
 )

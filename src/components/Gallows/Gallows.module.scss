@@ -1,45 +1,58 @@
 .gallows {
-  position: absolute;
-  background: #ccc;
-  width: 250px;
+  $size: 7%;
+  position: relative;
+  width: 60%;
 
   &:before {
     content: '';
     display: block;
-    padding-bottom: 200%;
+    padding-bottom: 160%;
   }
 
   &-common {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4%;
-    background: #000;
+    width: $size;
+    background-color: #825b1f;
+    box-shadow: inset -2px 0 5px -2px #000;
   }
 
   &-base {
-    bottom: -13%;
+    bottom: 0;
+    right: -$size;
     height: 30%;
     rotate: -90deg;
-    margin-left: -22%;
+    transform-origin: 0% 100%;
+    border-top-right-radius: 80%;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 
   &-pillar {
-    top: 0;
-    height: 100%;
-    margin-left: -20%;
+    top: 4%;
+    right: 15%;
+    height: 92%;
   }
 
   &-top-line {
-    top: -18%;
-    height: 36%;
-    rotate: -90deg;
-    margin-left: 12%;
+    top: 0;
+    right: 0;
+    transform-origin: 0% 0%;
+    height: 45%;
+    rotate: 90deg;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 100%;
   }
 
-  &-head-holder {
+  &-rope {
+    position: absolute;
     top: 0;
-    height: 10%;
-    margin-left: 48%;
+    left: 38%;
+    width: 2.5%;
+    height: 20%;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background: repeating-linear-gradient(60deg, #825b1f 35%, #e6bf83 45%);
+    box-shadow: inset -2px 0 2px -2px #000;
   }
 }
