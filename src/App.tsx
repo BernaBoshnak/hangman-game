@@ -12,6 +12,7 @@ import DifficultyButtons from './components/DifficultyButtons'
 import ErrorMessage from './components/ErrorMessage'
 import Loading from './components/Loading'
 import getWordFromApi from './fetchWord'
+import hangmanStyles from './components/HangmanContainer.module.scss'
 import './styles/index.scss'
 import styles from './App.module.scss'
 
@@ -112,7 +113,7 @@ function App() {
         )}
       </div>
       <div className={styles['right-col']}>
-        <div className="p-relative w-full">
+        <div className={hangmanStyles['hangman-container']}>
           <Gallows />
           <Character progress={incorrectLetters.length} />
         </div>
