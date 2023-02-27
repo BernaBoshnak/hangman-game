@@ -113,10 +113,12 @@ function App() {
         )}
       </div>
       <div className={styles['right-col']}>
-        <div className={hangmanStyles['hangman-container']}>
-          <Gallows />
-          <Character progress={incorrectLetters.length} />
-        </div>
+        {wordToGuess && (
+          <div className={hangmanStyles['hangman-container']}>
+            <Gallows />
+            <Character progress={incorrectLetters.length} />
+          </div>
+        )}
       </div>
     </div>
   )
