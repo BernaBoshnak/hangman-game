@@ -13,7 +13,6 @@ const Word = ({ word, pressedKeys, unlock }: WordProps) => {
   const wordToShow = unlock
     ? word.split('').map((letter, index) => (
         <span key={index} className={styles.letter}>
-          console.log(letter);
           {letter}
         </span>
       ))
