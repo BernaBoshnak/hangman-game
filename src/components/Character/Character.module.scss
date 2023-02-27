@@ -1,8 +1,8 @@
 .character {
   position: absolute;
-  left: 100px;
-  width: 120px;
-  background: #ccc;
+  width: 30%;
+  top: 22%;
+  left: 9%;
 
   &:before {
     content: '';
@@ -14,13 +14,12 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    background: #000;
     animation: 2s infinite alternate;
   }
 
   &-head {
     top: 0;
-    width: 55%;
+    width: 45%;
     border-radius: 50%;
 
     &:before {
@@ -31,19 +30,19 @@
   }
 
   &-common-body-parts {
-    width: 6%;
+    width: 10%;
     transform-origin: 0 0;
     border-radius: 50px;
   }
 
   &-body {
-    top: 22%;
-    height: 60%;
+    top: 25%;
+    height: 50%;
   }
 
   &-arms {
     top: 50%;
-    height: 20%;
+    height: 15%;
   }
 
   &-arm-left {
@@ -57,8 +56,8 @@
   }
 
   &-legs {
-    top: 80%;
-    height: 30%;
+    top: 75%;
+    height: 23%;
   }
 
   &-leg-left {
@@ -69,6 +68,26 @@
   &-leg-right {
     rotate: -55deg;
     animation-name: right-leg-animation;
+  }
+
+  &-arm-right,
+  &-leg-right {
+    left: 60%;
+  }
+
+  &-arm-left,
+  &-leg-left {
+    left: 40%;
+  }
+
+  &-fill {
+    background-color: #9f7967;
+    // background: linear-gradient(to bottom, #e6bf83 50%, #825b1f 50%);
+    // background-size: auto 3px;
+  }
+
+  &-line {
+    border: 2px dashed #9f7967;
   }
 }
 
