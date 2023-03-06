@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .character {
   position: absolute;
   width: 30%;
@@ -81,13 +83,11 @@
   }
 
   &-fill {
-    background-color: #9f7967;
-    // background: linear-gradient(to bottom, #e6bf83 50%, #825b1f 50%);
-    // background-size: auto 3px;
+    background-color: $color-character;
   }
 
   &-line {
-    border: 2px dashed #9f7967;
+    border: 2px dashed $color-character;
   }
 }
 

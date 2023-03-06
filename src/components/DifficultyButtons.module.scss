@@ -1,4 +1,5 @@
 @import '../styles/variables.scss';
+@import '../styles/responsive.module.scss';
 
 .buttonsContainer {
   display: flex;
@@ -12,15 +13,27 @@
   padding: 3px 22px;
   border: none;
   border-radius: 5px;
-  font-size: 24px;
+  font-size: 32px;
   letter-spacing: 1px;
   text-align: center;
-  color: $color-secondary;
-  background-color: $color-success;
+  color: $color-light;
+  background-color: $color-primary;
+
+  @include media-breakpoint-down(lg) {
+    font-size: 26px;
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: 20px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    font-size: 16px;
+  }
 }
 
 .button:hover {
-  color: $color-success;
-  background-color: $color-secondary;
+  color: $color-primary;
+  background-color: $color-light;
   transition: 0.3s ease-in-out all;
 }

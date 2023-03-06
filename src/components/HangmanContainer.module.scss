@@ -1,4 +1,14 @@
+@import '../styles/responsive.module.scss';
+
 .hangman-container {
   position: relative;
   width: 100%;
+
+  @include media-breakpoint-down(lg) {
+    width: 95%;
+  }
+
+  @include media-breakpoint-down(sm) {
+    width: 30%;
+  }
 }

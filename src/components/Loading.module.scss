@@ -1,4 +1,5 @@
 @import '../styles/variables.scss';
+@import '../styles/responsive.module.scss';
 
 .loader {
   margin-bottom: 30px;
@@ -7,8 +8,20 @@
   border-radius: 5px;
   font-weight: bold;
   letter-spacing: 0.3rem;
-  color: $color-success;
+  color: $color-primary;
   text-shadow: 1px 1px 0px #3e1521;
+
+  @include media-breakpoint-down(lg) {
+    font-size: 2.5rem;
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: 2rem;
+  }
+
+  @include media-breakpoint-down(sm) {
+    font-size: 1.5rem;
+  }
 }
 
 @keyframes blink {
