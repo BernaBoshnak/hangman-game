@@ -16,7 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noImplicitAny": true,
-    "types": ["cypress", "node"]
+    "types": ["cypress", "node", "@testing-library/cypress"]
   },
   "include": ["src/**/*.*", "cypress/**/*.*", "tests/**/*.*"]
 }
