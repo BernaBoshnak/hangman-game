@@ -1,4 +1,3 @@
-import React from 'react'
 import { Level } from '../word'
 import styles from './DifficultyButtons.module.scss'
 

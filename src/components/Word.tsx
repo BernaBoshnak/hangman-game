@@ -1,4 +1,3 @@
-import React from 'react'
 import { KeyboardLetter } from './Keyboard/Keyboard'
 import { classnames as cn } from '../utils/classnames'
 import styles from './Word.module.scss'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { classnames as cn } from '../../utils/classnames'
 import { CharacterElementProps } from './Character'
 import styles from './Character.module.scss'

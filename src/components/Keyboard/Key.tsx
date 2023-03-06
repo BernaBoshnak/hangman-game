@@ -1,4 +1,3 @@
-import React from 'react'
 import { KeyboardLetter } from './Keyboard'
 import styles from './Keyboard.module.scss'
 

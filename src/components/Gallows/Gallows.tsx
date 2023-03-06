@@ -1,4 +1,3 @@
-import React from 'react'
 import { classnames as cn } from '../../utils/classnames'
 import styles from './Gallows.module.scss'
 
