@@ -19,7 +19,8 @@ import styles from './App.module.scss'
 function App() {
   const [wordToGuess, setWordToGuess] = useState<string>()
   const [pressedKeys, setPressedKeys] = useState<KeyboardLetter[]>([])
-  const [isRandomWordFound, setIsRandomWordFound] = useState<boolean>()
+  const [randomWordFound, setRandomWordFound] = useState<boolean>()
+  const [isVisible, setIsVisible] = useState(true)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleKeyboardClick = (letter: KeyboardLetter) => {
@@ -27,8 +28,9 @@ function App() {
   }
 
   const difficultyLevelClick = async (difficulty: Level) => {
+    setIsVisible(false)
     setIsLoading(true)
-    setIsRandomWordFound(undefined)
+    setRandomWordFound(undefined)
     const { minLength, maxLength } = getWordLengths(difficulty)
 
     try {
@@ -36,13 +38,13 @@ function App() {
       console.log(word)
 
       if (!word) {
-        setIsRandomWordFound(false)
+        setRandomWordFound(false)
         return
       }
 
       setWordToGuess(word.toUpperCase())
     } catch (_error) {
-      setIsRandomWordFound(false)
+      setRandomWordFound(false)
     } finally {
       setIsLoading(false)
     }
@@ -51,7 +53,6 @@ function App() {
   useEffect(() => {
     function callback(e: KeyboardEvent) {
       const key = e.key.toUpperCase()
-      console.log(key)
 
       if (isKeyboardLetter(key)) {
         setPressedKeys((prevState) => [...prevState, key])
@@ -71,9 +72,10 @@ function App() {
   )
 
   const handlePlayAgainClick = () => {
+    setIsVisible(true)
     setPressedKeys([])
     setWordToGuess(undefined)
-    setIsRandomWordFound(undefined)
+    setRandomWordFound(undefined)
   }
 
   const isGameLost = incorrectLetters.length >= characterElements.length
@@ -86,40 +88,45 @@ function App() {
   const isGameOver = isGameLost || isGameWon
 
   return (
-    <div className={styles['wrapper']}>
-      <div className={styles['left-col']}>
-        {isRandomWordFound === false && (
-          <ErrorMessage>Oops, something went wrong. Try again.</ErrorMessage>
-        )}
-        {isLoading && <Loading />}
-        {!wordToGuess && (
-          <DifficultyButtons difficultyLevelClick={difficultyLevelClick} />
-        )}
-        {isGameLost && <GameOver isWon={false} reset={handlePlayAgainClick} />}
-        {isGameWon && <GameOver isWon={true} reset={handlePlayAgainClick} />}
-        {wordToGuess && (
-          <Word
-            word={wordToGuess}
-            pressedKeys={pressedKeys}
-            unlock={isGameOver}
-          />
-        )}
-        {wordToGuess && (
-          <Keyboard
-            onKeyClick={handleKeyboardClick}
-            pressedKeys={pressedKeys}
-            isKeyboardDisabled={isGameOver}
-          />
-        )}
-      </div>
-      <div className={styles['right-col']}>
-        {wordToGuess && (
-          <div className={hangmanStyles['hangman-container']}>
-            <Gallows />
-            <Character progress={incorrectLetters.length} />
+    <div className={styles['full-screen-wrapper']}>
+      {!wordToGuess ? (
+        <div className={styles['center-wrapper']}>
+          {randomWordFound === false && (
+            <ErrorMessage>Oops, something went wrong. Try again.</ErrorMessage>
+          )}
+          {isLoading && <Loading />}
+          {isVisible && (
+            <DifficultyButtons difficultyLevelClick={difficultyLevelClick} />
+          )}
+        </div>
+      ) : (
+        <>
+          <div className={styles['left-col']}>
+            {isGameLost && (
+              <GameOver isWon={false} reset={handlePlayAgainClick} />
+            )}
+            {isGameWon && (
+              <GameOver isWon={true} reset={handlePlayAgainClick} />
+            )}
+            <Word
+              word={wordToGuess}
+              pressedKeys={pressedKeys}
+              unlock={isGameOver}
+            />
+            <Keyboard
+              onKeyClick={handleKeyboardClick}
+              pressedKeys={pressedKeys}
+              isKeyboardDisabled={isGameOver}
+            />
           </div>
-        )}
-      </div>
+          <div className={styles['right-col']}>
+            <div className={hangmanStyles['hangman-container']}>
+              <Gallows />
+              <Character progress={incorrectLetters.length} />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
