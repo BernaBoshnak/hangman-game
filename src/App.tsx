@@ -20,7 +20,6 @@ function App() {
   const [wordToGuess, setWordToGuess] = useState<string>()
   const [pressedKeys, setPressedKeys] = useState<KeyboardLetter[]>([])
   const [randomWordFound, setRandomWordFound] = useState<boolean>()
-  const [isVisible, setIsVisible] = useState(true)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleKeyboardClick = (letter: KeyboardLetter) => {
@@ -28,7 +27,6 @@ function App() {
   }
 
   const difficultyLevelClick = async (difficulty: Level) => {
-    setIsVisible(false)
     setIsLoading(true)
     setRandomWordFound(undefined)
     const { minLength, maxLength } = getWordLengths(difficulty)
@@ -72,20 +70,27 @@ function App() {
   )
 
   const handlePlayAgainClick = () => {
-    setIsVisible(true)
     setPressedKeys([])
     setWordToGuess(undefined)
     setRandomWordFound(undefined)
   }
 
-  const isGameLost = incorrectLetters.length >= characterElements.length
-  const isGameWon = Boolean(
+  let isGameWon: boolean | undefined
+
+  if (incorrectLetters.length >= characterElements.length) {
+    isGameWon = false
+  }
+
+  if (
     wordToGuess &&
-      Array.from(wordToGuess).every((letter) => {
-        return pressedKeys.some((key) => key === letter)
-      }),
-  )
-  const isGameOver = isGameLost || isGameWon
+    Array.from(wordToGuess).every((letter) => {
+      return pressedKeys.some((key) => key === letter)
+    })
+  ) {
+    isGameWon = true
+  }
+
+  const isGameOver = isGameWon !== undefined
 
   return (
     <div className={styles['full-screen-wrapper']}>
@@ -95,23 +100,20 @@ function App() {
             <ErrorMessage>Oops, something went wrong. Try again.</ErrorMessage>
           )}
           {isLoading && <Loading />}
-          {isVisible && (
+          {!isLoading && (
             <DifficultyButtons difficultyLevelClick={difficultyLevelClick} />
           )}
         </div>
       ) : (
         <>
           <div className={styles['left-col']}>
-            {isGameLost && (
-              <GameOver isWon={false} reset={handlePlayAgainClick} />
-            )}
-            {isGameWon && (
-              <GameOver isWon={true} reset={handlePlayAgainClick} />
+            {isGameWon !== undefined && (
+              <GameOver isWon={isGameWon} reset={handlePlayAgainClick} />
             )}
             <Word
               word={wordToGuess}
               pressedKeys={pressedKeys}
-              unlock={isGameOver}
+              shouldUnlockAllLetters={isGameOver}
             />
             <Keyboard
               onKeyClick={handleKeyboardClick}
