@@ -1,22 +1,18 @@
 @import '../styles/variables.scss';
-@import '../styles/responsive.module.scss';
+@import '../styles/mixins/responsive.scss';
 
 .loader {
-  margin-bottom: 30px;
-  padding: 10px 50px;
+  margin-bottom: 2.5rem;
+  padding: 0.625rem 3.125rem;
   font-size: 3rem;
   border-radius: 5px;
   font-weight: bold;
-  letter-spacing: 0.3rem;
+  letter-spacing: 5px;
   color: $color-primary;
   text-shadow: 1px 1px 0px #3e1521;
 
   @include media-breakpoint-down(lg) {
     font-size: 2.5rem;
-  }
-
-  @include media-breakpoint-down(md) {
-    font-size: 2rem;
   }
 
   @include media-breakpoint-down(sm) {

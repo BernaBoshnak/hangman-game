@@ -1,24 +1,20 @@
 @import '../styles/variables.scss';
-@import '../styles/responsive.module.scss';
+@import '../styles/mixins/responsive.scss';
 
 .container {
-  display: inline-flex;
+  display: flex;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   margin: 2rem 0 2rem;
-  padding: 20px 10px;
+  padding: 1.25rem .625rem;
 
   @include media-breakpoint-down(lg) {
     margin: 1rem 0 1rem;
   }
 
-  @include media-breakpoint-down(md) {
-    margin-bottom: 0.8rem;
-  }
-
   @include media-breakpoint-down(sm) {
-    margin: 0.5rem 0 0.5rem;
+    margin: .5rem 0 .5rem;
   }
 }
 
@@ -32,12 +28,12 @@
     padding-bottom: 130%;
   }
 
-  margin: 5px;
+  margin: .3125rem;
   padding: 0;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0.8rem;
+  border-radius: 12px;
   font-size: 3rem;
   background-color: $color-light;
   box-shadow: 0 2px 0 0 #937074, 0 0 1px 0 #000;
@@ -71,11 +67,6 @@
   @include media-breakpoint-down(lg) {
     max-width: 70px;
     font-size: 2.5rem;
-  }
-
-  @include media-breakpoint-down(md) {
-    max-width: 60px;
-    font-size: 2rem;
   }
 
   @include media-breakpoint-down(sm) {
