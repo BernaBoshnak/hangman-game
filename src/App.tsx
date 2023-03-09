@@ -14,6 +14,7 @@ import Loading from './components/Loading'
 import getWordFromApi from './fetchWord'
 import hangmanStyles from './components/HangmanContainer.module.scss'
 import './styles/index.scss'
+import { classnames as cn } from './utils/classnames'
 import styles from './App.module.scss'
 
 function App() {
@@ -92,9 +93,9 @@ function App() {
 
   const isGameOver = isGameWon !== undefined
 
-  return (
-    <div className={styles['full-screen-wrapper']}>
-      {!wordToGuess ? (
+  if (!wordToGuess) {
+    return (
+      <div className={styles['full-screen-wrapper']}>
         <div className={styles['center-wrapper']}>
           {randomWordFound === false && (
             <ErrorMessage>Oops, something went wrong. Try again.</ErrorMessage>
@@ -104,31 +105,33 @@ function App() {
             <DifficultyButtons difficultyLevelClick={difficultyLevelClick} />
           )}
         </div>
-      ) : (
-        <>
-          <div className={styles['left-col']}>
-            {isGameWon !== undefined && (
-              <GameOver isWon={isGameWon} reset={handlePlayAgainClick} />
-            )}
-            <Word
-              word={wordToGuess}
-              pressedKeys={pressedKeys}
-              shouldUnlockAllLetters={isGameOver}
-            />
-            <Keyboard
-              onKeyClick={handleKeyboardClick}
-              pressedKeys={pressedKeys}
-              isKeyboardDisabled={isGameOver}
-            />
-          </div>
-          <div className={styles['right-col']}>
-            <div className={hangmanStyles['hangman-container']}>
-              <Gallows />
-              <Character progress={incorrectLetters.length} />
-            </div>
-          </div>
-        </>
-      )}
+      </div>
+    )
+  }
+
+  return (
+    <div className={cn(styles['full-screen-wrapper'])}>
+      <div className={styles['left-col']}>
+        {isGameWon !== undefined && (
+          <GameOver isWon={isGameWon} reset={handlePlayAgainClick} />
+        )}
+        <Word
+          word={wordToGuess}
+          pressedKeys={pressedKeys}
+          shouldUnlockAllLetters={isGameOver}
+        />
+        <Keyboard
+          onKeyClick={handleKeyboardClick}
+          pressedKeys={pressedKeys}
+          isKeyboardDisabled={isGameOver}
+        />
+      </div>
+      <div className={styles['right-col']}>
+        <div className={hangmanStyles['hangman-container']}>
+          <Gallows />
+          <Character progress={incorrectLetters.length} />
+        </div>
+      </div>
     </div>
   )
 }
