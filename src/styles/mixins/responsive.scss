@@ -1,0 +1,11 @@
+$grid-breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+);
+
+@mixin media-breakpoint-down($breakpoint) {
+  @media (max-width: map-get($grid-breakpoints, $breakpoint)) {
+    @content;
+  }
+}

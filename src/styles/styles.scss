@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Mina&display=swap');
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: 'Mina', sans-serif;
+  color: black;
+  background: url(../images/background.png) repeat 0 0;
+}
