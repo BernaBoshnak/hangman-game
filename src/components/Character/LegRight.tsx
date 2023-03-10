@@ -14,7 +14,14 @@ const LegRight = ({ isFilled }: CharacterElementProps) => (
         [styles['character-line']]: !isFilled,
       },
     )}
-  />
+    data-testid="body-part"
+  >
+    {isFilled && (
+      <span className={styles['body-part-description']}>
+        Right leg appeared.
+      </span>
+    )}
+  </div>
 )
 
 export default LegRight

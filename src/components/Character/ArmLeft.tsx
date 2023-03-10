@@ -14,7 +14,14 @@ const ArmLeft = ({ isFilled }: CharacterElementProps) => (
         [styles['character-line']]: !isFilled,
       },
     )}
-  />
+    data-testid="body-part"
+  >
+    {isFilled && (
+      <span className={styles['body-part-description']}>
+        Left arm appeared.
+      </span>
+    )}
+  </div>
 )
 
 export default ArmLeft

@@ -13,7 +13,12 @@ const Body = ({ isFilled }: CharacterElementProps) => (
         [styles['character-line']]: !isFilled,
       },
     )}
-  />
+    data-testid="body-part"
+  >
+    {isFilled && (
+      <span className={styles['body-part-description']}>Body appeared.</span>
+    )}
+  </div>
 )
 
 export default Body
