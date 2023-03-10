@@ -21,6 +21,7 @@ const Key = ({
       className={styles.button}
       onClick={() => onKeyClick(children)}
       disabled={isButtonDisabled || isKeyboardDisabled}
+      aria-hidden
     >
       <span className={styles.key}>{children}</span>
     </button>
