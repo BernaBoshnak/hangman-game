@@ -1,3 +1,4 @@
+@import '../../styles/bootstrap.scss';
 @import '../../styles/variables.scss';
 
 .character {
@@ -89,6 +90,10 @@
   &-line {
     border: 2px dashed $color-character;
   }
+}
+
+.body-part-description {
+  @include visually-hidden;
 }
 
 @keyframes left-arm-animation {
