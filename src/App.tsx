@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Character, { characterElements } from './components/Character/Character'
 import Gallows from './components/Gallows/Gallows'
 import Word from './components/Word'
