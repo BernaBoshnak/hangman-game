@@ -21,6 +21,7 @@ const Word = ({ word, pressedKeys, shouldUnlockAllLetters }: WordProps) => {
           [styles['letter-wrapper-incorrect']]:
             !isCorrect && shouldUnlockAllLetters,
         })}
+        data-testid="word-letter"
       >
         {(shouldUnlockAllLetters || isCorrect) && <Letter>{letter}</Letter>}
       </span>
