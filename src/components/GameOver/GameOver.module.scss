@@ -11,7 +11,7 @@
 
   @include media-breakpoint-down(lg) {
     width: 30%;
-    padding: .75rem;
+    padding: 0.75rem;
     margin: 1.25rem auto 0;
   }
 }
@@ -37,7 +37,7 @@
   letter-spacing: 0.5px;
   color: $color-light;
   background-color: $color-secondary;
-  box-shadow: inset 0 0 6px $color-dark-shadow;
+  box-shadow: inset 0 0 3px $color-dark-shadow;
 
   @include media-breakpoint-down(lg) {
     font-size: 0.75rem;
@@ -47,16 +47,29 @@
 .button:hover {
   color: $color-secondary;
   background-color: $color-light;
-  box-shadow: inset 0 0 6px $color-secondary;
+  box-shadow: inset 0 0 3px $color-secondary;
   transition: 0.3s ease-in-out all;
 }
 
 .win {
   background-color: $color-primary;
-  box-shadow: inset 0 0 8px $color-ligh-shadow;
+  box-shadow: inset 0 0 5px $color-ligh-shadow;
 }
 
 .lose {
-  background-color: $color-danger;
-  box-shadow: inset 0 0 8px $color-dark-shadow;
+  background-color: $color-secondary;
+  box-shadow: inset 0 0 5px $color-dark-shadow;
+
+  .button {
+    color: $color-light;
+    background-color: $color-primary;
+    box-shadow: inset 0 0 3px $color-dark-shadow;
+  }
+
+  .button:hover {
+    color: $color-primary;
+    background-color: $color-light;
+    box-shadow: inset 0 0 3px $color-primary;
+    transition: 0.3s ease-in-out all;
+  }
 }
