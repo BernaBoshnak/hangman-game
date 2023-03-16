@@ -19,16 +19,16 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "npm run validate && react-scripts build",
-    "test": "react-scripts test",
+    "test": "npm run cy:run",
     "eject": "react-scripts eject",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|json|ts|tsx)\"",
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --list-different",
     "ts-lint": "eslint . --ext .ts,.tsx",
     "ts-validate": "tsc --noEmit",
-    "validate": "npm-run-all --parallel check-format ts-lint ts-validate",
+    "validate": "npm-run-all --parallel check-format ts-lint ts-validate cy:run",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run --component"
   },
   "browserslist": {
     "production": [
