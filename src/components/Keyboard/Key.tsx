@@ -24,7 +24,7 @@ const Key = ({
       aria-hidden
       data-testid={`letter-${children}`}
     >
-      <span className={styles.key}>{children}</span>
+      <kbd className={styles.key}>{children}</kbd>
     </button>
   )
 }
