@@ -13,7 +13,7 @@ export const characterElements = [
   ArmRight,
   LegLeft,
   LegRight,
-]
+] as const
 
 type CharacterProps = {
   progress: number
@@ -24,7 +24,7 @@ export type CharacterElementProps = {
 }
 
 const Character = ({ progress }: CharacterProps) => (
-  <div className={styles.character}>
+  <div className={styles.character} data-testid="body-parts">
     {characterElements.map((Component, index) => {
       const isFilled = index < progress
 
