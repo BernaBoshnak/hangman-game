@@ -34,7 +34,6 @@ function App() {
 
     try {
       const word = await getWordFromApi(minLength, maxLength)
-      console.log(word)
 
       if (!word) {
         setRandomWordFound(false)
