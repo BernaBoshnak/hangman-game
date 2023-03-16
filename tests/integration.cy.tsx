@@ -57,4 +57,87 @@ describe('words endpoint', () => {
       })
     })
   })
+
+  describe('gameplay', () => {
+    const word = 'SOON'
+    const bodyParts = [
+      /head/i,
+      /body/i,
+      /left arm/i,
+      /right arm/i,
+      /left leg/i,
+      /right leg/i,
+    ] as const
+
+    const pressLetters = (
+      word: string,
+      pressedLetters: Set<string>,
+      bodyParts: RegExp[],
+    ) => {
+      cy.findAllByTestId('word-letter').as('letters')
+
+      pressedLetters.forEach((pressedLetter) => {
+        // keyboard click
+        cy.findByTestId(`letter-${pressedLetter}`).click()
+
+        // get occurence indexes in the word
+        const occurrenceIndexes: number[] = []
+
+        for (let i = 0; i < word.length; i++) {
+          if (word[i] === pressedLetter) {
+            occurrenceIndexes.push(i)
+          }
+        }
+
+        if (occurrenceIndexes.length) {
+          // letter exists
+          occurrenceIndexes.forEach((index) => {
+            cy.get('@letters').eq(index).should('have.text', pressedLetter)
+          })
+          cy.findByTestId('body-parts').within(() => {
+            cy.findByText(bodyParts[0]).should('not.exist')
+          })
+        } else {
+          // letter does not exist
+          cy.get('@letters').should('not.have.text', pressedLetter)
+          cy.findByTestId('body-parts').within(() => {
+            cy.findByText(bodyParts.splice(0, 1)[0])
+          })
+        }
+      })
+    }
+
+    afterEach(() => {
+      cy.findByText(/play again/i).click()
+      cy.findByRole('button', { name: 'Easy' })
+      cy.findByRole('button', { name: 'Normal' })
+      cy.findByRole('button', { name: 'Hard' })
+    })
+
+    it('should win the game', () => {
+      startGame({ body: { word } })()
+
+      cy.wait('@getWord').then(() => {
+        const pressedLetters = new Set(['S', 'O', 'N'])
+        const bodyPartsCopy = [...bodyParts]
+
+        pressLetters(word, pressedLetters, bodyPartsCopy)
+        cy.wrap(bodyPartsCopy).should('have.length', 6)
+        cy.findByText(/congratulations/i)
+      })
+    })
+
+    it('should lose the game', () => {
+      startGame({ body: { word } })()
+
+      cy.wait('@getWord').then(() => {
+        const pressedLetters = new Set(['B', 'M', 'R', 'O', 'N', 'A', 'P', 'K'])
+        const bodyPartsCopy = [...bodyParts]
+
+        pressLetters(word, pressedLetters, bodyPartsCopy)
+        cy.wrap(bodyPartsCopy).should('have.length', 0)
+        cy.findByText(/game over/i)
+      })
+    })
+  })
 })
