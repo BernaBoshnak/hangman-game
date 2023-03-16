@@ -31,4 +31,30 @@ describe('words endpoint', () => {
       })
     })
   })
+
+  describe('difficulty request parameters', () => {
+    it('should request with the correct min and max length for easy difficulty', () => {
+      startGame()()
+
+      cy.wait('@getWord').then(({ request }) => {
+        expect(request.query).to.deep.eq({ minLength: '3', maxLength: '5' })
+      })
+    })
+
+    it('should request with the correct min and max length for normal difficulty', () => {
+      startGame()('normal')
+
+      cy.wait('@getWord').then(({ request }) => {
+        expect(request.query).to.deep.eq({ minLength: '6', maxLength: '8' })
+      })
+    })
+
+    it('should request with the correct min and max length for hard difficulty', () => {
+      startGame()('hard')
+
+      cy.wait('@getWord').then(({ request }) => {
+        expect(request.query).to.deep.eq({ minLength: '9', maxLength: '15' })
+      })
+    })
+  })
 })
