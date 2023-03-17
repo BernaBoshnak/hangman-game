@@ -1,5 +1,5 @@
 import App from '../src/App'
-import { Level } from '../src/word'
+import { Level } from '../src/utils/word'
 import { RouteHandler } from 'cypress/types/net-stubbing'
 
 const startGame = (routeHandler: RouteHandler = { statusCode: 200 }) => {

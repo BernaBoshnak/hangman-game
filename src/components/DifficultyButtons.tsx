@@ -1,4 +1,4 @@
-import { Level } from '../word'
+import { Level } from '../utils/word'
 import styles from './DifficultyButtons.module.scss'
 
 type DifficultyButtonsProps = {

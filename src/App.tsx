@@ -6,7 +6,7 @@ import Keyboard, {
   KeyboardLetter,
   isKeyboardLetter,
 } from './components/Keyboard/Keyboard'
-import getWordLengths, { Level } from './word'
+import getWordLengths, { Level } from './utils/word'
 import GameOver from './components/GameOver/GameOver'
 import DifficultyButtons from './components/DifficultyButtons'
 import ErrorMessage from './components/ErrorMessage'
