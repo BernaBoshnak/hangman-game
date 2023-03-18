@@ -22,7 +22,7 @@ const Keyboard = ({
   <div className={styles.container}>
     {letters.map((lettersGroup, index) => {
       return (
-        <div key={index}>
+        <div key={index} className={styles.row}>
           {lettersGroup.map((letter) => {
             return (
               <Key

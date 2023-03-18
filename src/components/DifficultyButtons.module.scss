@@ -1,5 +1,6 @@
 @import '../styles/variables.scss';
 @import '../styles/mixins/responsive.scss';
+@import '../styles/utils/calc.scss';
 
 .buttonsContainer {
   display: flex;
@@ -10,21 +11,21 @@
 }
 
 .button {
-  padding: 0.187rem 1.5rem;
+  padding: rem-calc(4px) rem-calc(24px);
   border: none;
   border-radius: 5px;
-  font-size: 2rem;
+  font-size: rem-calc(32px);
   letter-spacing: 1px;
   text-align: center;
   color: $color-light;
   background-color: $color-primary;
 
   @include media-breakpoint-down(lg) {
-    font-size: 1.625rem;
+    font-size: rem-calc(26px);
   }
 
   @include media-breakpoint-down(sm) {
-    font-size: 1rem;
+    font-size: rem-calc(16px);
   }
 }
 
