@@ -19,13 +19,13 @@
 
 .gameText {
   padding: rem-calc(8px) rem-calc(4px) 0;
-  font-size: rem-calc(26px);
+  font-size: rem-calc(24px);
   font-weight: bold;
   letter-spacing: 1px;
   color: #3a3a3a;
 
   @include media-breakpoint-down(lg) {
-    font-size: rem-calc(22px);
+    font-size: rem-calc(18px);
   }
 }
 
