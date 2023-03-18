@@ -1,0 +1,6 @@
+@import '../variables.scss';
+
+@function rem-calc($size, $default: $base-size) {
+  $remSize: $size / $default;
+  @return $remSize * 1rem;
+}
