@@ -1,54 +1,54 @@
 @import '../../styles/variables.scss';
 @import '../../styles/mixins/responsive.scss';
+@import '../../styles/utils/calc.scss';
 
 .container {
-  width: 25%;
   margin: 0 auto;
-  padding: 1.125rem;
+  padding: rem-calc(18px);
+  width: 230px;
   border-radius: 50%;
   text-align: center;
   overflow: hidden;
 
   @include media-breakpoint-down(lg) {
-    width: 30%;
-    padding: 0.75rem;
-    margin: 1.25rem auto 0;
+    width: 180px;
+    padding: rem-calc(12px);
+    margin: rem-calc(18px) auto 0;
   }
 }
 
-.title {
-  margin-bottom: 0.125rem;
-  font-size: 1.375rem;
+.gameText {
+  padding: rem-calc(8px) rem-calc(4px) 0;
+  font-size: rem-calc(26px);
   font-weight: bold;
   letter-spacing: 1px;
   color: #3a3a3a;
 
   @include media-breakpoint-down(lg) {
-    font-size: 1rem;
-    padding-top: 0.25rem;
+    font-size: rem-calc(22px);
   }
 }
 
 .button {
-  padding: 0.5rem 1rem;
+  padding: rem-calc(8px) rem-calc(16px);
   border: none;
-  font-size: 1rem;
+  font-size: rem-calc(18px);
   border-radius: 50%;
   letter-spacing: 0.5px;
   color: $color-light;
   background-color: $color-secondary;
   box-shadow: inset 0 0 3px $color-dark-shadow;
 
-  @include media-breakpoint-down(lg) {
-    font-size: 0.75rem;
+  &:hover {
+    color: $color-secondary;
+    background-color: $color-light;
+    box-shadow: inset 0 0 3px $color-secondary;
+    transition: 0.3s ease-in-out all;
   }
-}
 
-.button:hover {
-  color: $color-secondary;
-  background-color: $color-light;
-  box-shadow: inset 0 0 3px $color-secondary;
-  transition: 0.3s ease-in-out all;
+  @include media-breakpoint-down(lg) {
+    font-size: rem-calc(14px);
+  }
 }
 
 .win {
