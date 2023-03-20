@@ -5,7 +5,7 @@
   position: absolute;
   width: 30%;
   top: 22%;
-  left: 9%;
+  left: 28.5%;
 
   &:before {
     content: '';
@@ -88,7 +88,8 @@
   }
 
   &-line {
-    border: 2px dashed $color-character;
+    border: 1px dashed $color-character;
+    box-shadow: 0 0 5px 0px rgba(0,0,0,.3);
   }
 }
 
