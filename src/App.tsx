@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Character, { characterElements } from './components/Character/Character'
 import Gallows from './components/Gallows/Gallows'
 import Word from './components/Word'
-import Keyboard, {
-  KeyboardLetter,
-  isKeyboardLetter,
-} from './components/Keyboard/Keyboard'
+import Keyboard, { KeyboardLetter } from './components/Keyboard/Keyboard'
 import getWordLengths, { Level } from './utils/word'
 import GameOver from './components/GameOver/GameOver'
 import DifficultyButtons from './components/DifficultyButtons'
@@ -47,23 +44,6 @@ function App() {
       setIsLoading(false)
     }
   }
-
-  useEffect(() => {
-    function callback(e: KeyboardEvent) {
-      const key = e.key.toUpperCase()
-
-      if (isKeyboardLetter(key)) {
-        setPressedKeys((prevState) => [...prevState, key])
-      }
-    }
-
-    document.addEventListener('keypress', callback)
-
-    // cleanup
-    return () => {
-      document.removeEventListener('keypress', callback)
-    }
-  }, [])
 
   const incorrectLetters = pressedKeys.filter(
     (letter) => !wordToGuess?.includes(letter),
@@ -122,6 +102,7 @@ function App() {
         <Keyboard
           onKeyClick={handleKeyboardClick}
           pressedKeys={pressedKeys}
+          setPressedKeys={setPressedKeys}
           isKeyboardDisabled={isGameOver}
         />
       </div>
