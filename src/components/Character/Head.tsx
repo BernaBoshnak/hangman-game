@@ -11,7 +11,9 @@ const Head = ({ isFilled }: CharacterElementProps) => (
     data-testid="body-part"
   >
     {isFilled && (
-      <span className={styles['body-part-description']}>Head appeared.</span>
+      <span className={styles['body-part-description']} data-testid="body-text">
+        Head appeared.
+      </span>
     )}
   </div>
 )

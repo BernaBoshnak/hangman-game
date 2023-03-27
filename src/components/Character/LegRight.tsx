@@ -17,7 +17,7 @@ const LegRight = ({ isFilled }: CharacterElementProps) => (
     data-testid="body-part"
   >
     {isFilled && (
-      <span className={styles['body-part-description']}>
+      <span className={styles['body-part-description']} data-testid="body-text">
         Right leg appeared.
       </span>
     )}

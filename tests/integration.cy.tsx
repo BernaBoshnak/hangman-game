@@ -58,6 +58,24 @@ describe('words endpoint', () => {
     })
   })
 
+  describe('Keyboard', () => {
+    it('should display single body part when pressing a given key N times', () => {
+      startGame({ body: { word: 'SOON' } })()
+
+      cy.wait('@getWord').then(() => {
+        cy.findByTestId('keyboard').then(() => {
+          const key = 'M'
+          cy.document().trigger('keypress', { key: key })
+          cy.document().trigger('keypress', { key: key })
+        })
+
+        cy.findByTestId('body-parts').within(() => {
+          cy.findAllByTestId('body-text').should('have.length', 1)
+        })
+      })
+    })
+  })
+
   describe('gameplay', () => {
     const word = 'SOON'
     const bodyParts = [

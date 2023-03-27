@@ -16,7 +16,9 @@ const Body = ({ isFilled }: CharacterElementProps) => (
     data-testid="body-part"
   >
     {isFilled && (
-      <span className={styles['body-part-description']}>Body appeared.</span>
+      <span className={styles['body-part-description']} data-testid="body-text">
+        Body appeared.
+      </span>
     )}
   </div>
 )
