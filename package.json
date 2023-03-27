@@ -20,7 +20,6 @@
     "start": "react-scripts start",
     "build": "npm run validate && react-scripts build",
     "test": "npm run cy:run",
-    "eject": "react-scripts eject",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|json|ts|tsx)\"",
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --list-different",
