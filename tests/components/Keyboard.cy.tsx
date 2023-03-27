@@ -1,4 +1,7 @@
-import Keyboard from '../../src/components/Keyboard/Keyboard'
+import { useState } from 'react'
+import Keyboard, {
+  KeyboardLetter,
+} from '../../src/components/Keyboard/Keyboard'
 
 describe('<Keyboard />', () => {
   it('renders all keys', () => {
@@ -10,6 +13,7 @@ describe('<Keyboard />', () => {
       <Keyboard
         onKeyClick={() => {}}
         pressedKeys={[]}
+        setPressedKeys={() => []}
         isKeyboardDisabled={false}
       />,
     )
@@ -26,11 +30,12 @@ describe('<Keyboard />', () => {
       keyClickStub = cy.stub().as('clickStub')
     })
 
-    it('does not allow to press keys on disabled keyboard', () => {
+    it('does not allow to press keys (click) on disabled keyboard', () => {
       cy.mount(
         <Keyboard
           onKeyClick={keyClickStub}
           pressedKeys={[]}
+          setPressedKeys={() => []}
           isKeyboardDisabled={true}
         />,
       )
@@ -43,11 +48,43 @@ describe('<Keyboard />', () => {
       cy.get('@clickStub').should('have.not.been.called')
     })
 
+    it('does not allow to press keys (keypress) on disabled keyboard', () => {
+      let tempPressedKeys: KeyboardLetter[]
+
+      const Wrapper = () => {
+        const [pressedKeys, setPressedKeys] = useState<KeyboardLetter[]>([])
+        tempPressedKeys = pressedKeys
+
+        return (
+          <Keyboard
+            onKeyClick={() => {}}
+            pressedKeys={pressedKeys}
+            setPressedKeys={setPressedKeys}
+            isKeyboardDisabled={false}
+          />
+        )
+      }
+
+      cy.mount(<Wrapper />)
+      cy.findByTestId('keyboard').then(() => {
+        const key = 'M'
+
+        cy.document().trigger('keypress', { key: key })
+        cy.document().trigger('keypress', { key: key })
+
+        cy.wrap(null).should(() => {
+          expect(tempPressedKeys).to.have.lengthOf(1)
+          expect(tempPressedKeys[0]).to.equal(key)
+        })
+      })
+    })
+
     it('allow to press keys on enabled keyboard', () => {
       cy.mount(
         <Keyboard
           onKeyClick={keyClickStub}
           pressedKeys={[]}
+          setPressedKeys={() => []}
           isKeyboardDisabled={false}
         />,
       )
@@ -71,6 +108,7 @@ describe('<Keyboard />', () => {
         <Keyboard
           onKeyClick={keyClickStub}
           pressedKeys={[]}
+          setPressedKeys={() => []}
           isKeyboardDisabled={false}
         />,
       )
