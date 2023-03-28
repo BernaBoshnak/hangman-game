@@ -14,6 +14,20 @@ Hangman is a word recognition game where the player has to guess the secret word
 - HTML5
 - SCSS
 
+## :pencil: Technical details
+
+This web application, built with React, utilizes an external `API endpoint written in PHP` to generate a random word based on selected settings. The API provides a list of English nouns and allows users to specify criteria such as word length, starting and ending letters, and contains. Additionally, the API can be used in other projects depending on their specific needs.
+
+The tests for this application are written using `Cypress`, a popular end-to-end testing framework for web applications. I chose Cypress because it can write both component and end tests, which allowed me to do in-depth application testing.
+
+Component tests test individual components of the application, ensuring that each component works as expected. End-to-end tests test the entire application by simulating user interactions, and ensuring that the application behaves as expected. I used both types of tests to ensure comprehensive testing of the application.
+
+In the project, `mixins` is used to maintain a responsive design, reduce code duplication, and make the code more efficient and easier to maintain in the future.
+Additionally, the project uses a `screen reader` to support website accessibility for people with disabilities, ensuring equal access to information for all users, including those with visual or hearing impairments.
+The project uses `Bootstrap`, which is a popular CSS framework providing ready-made components and styles for easier and faster web application development, improving the design and functionality of the project while ensuring cross-browser compatibility.
+Moreover, all styles in the project are written in `SCSS` (Sass) to achieve easier and convenient management of web application styles. SCSS offers variables, functions, and nested selectors to reduce code duplication and make it easier to write CSS. Additionally, the separation of styles into smaller and more maintainable files through SCSS makes the project more organized and manageable.
+Different environment variables are used for different stages of `development`, `testing`, and `production`, enhancing the flexibility and security of the application.
+
 ## :woman_juggling: Available Scripts
 
 You need to have [NodeJS](https://nodejs.org/en/) installed to run the scripts. To install the dependencies, run `npm install` first.
