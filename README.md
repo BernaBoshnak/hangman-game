@@ -4,7 +4,7 @@ This is a Hangman Game application built using `React`.
 
 ## :scroll: Description
 
-Hangman is a word recognition game where the player has to guess the secret word by suggesting letters and having a certain number of attempts. The game selects a random word from a predefined list and displays it as a row of empty boxes. If the player guesses a letter from the word, it replaces the corresponding empty box. Otherwise, the player loses experience and fills in part of the human figurine, starting with the head. In my version of the game, the man has 6 pieces that must be filled before you lose. The player wins if he succeeds in guessing all the letters of the word before exhausting all the attempts, and loses if he exhausts all the attempts before he guesses all the letters.
+Hangman is a word recognition game where the player has to guess the secret word by suggesting letters and having a certain number of attempts. The game selects a random word from a predefined list and displays it as a row of empty boxes. If the player guesses a letter from the word, it replaces the corresponding empty box. Otherwise a part of the human body gets filled, starting with the head. In this version of the game, the man has 6 pieces. The player wins if they succeeds in guessing all the letters of the word before exhausting all the attempts, and loses if otherwise.
 
 ## :briefcase: Technologies used
 
@@ -12,21 +12,39 @@ Hangman is a word recognition game where the player has to guess the secret word
 - TypeScript
 - PHP
 - HTML5
-- SCSS
+- SCSS (CSS modules)
+- ESlint
+- Cypress
 
 ## :pencil: Technical details
 
-This web application, built with React, utilizes an external `API endpoint written in PHP` to generate a random word based on selected settings. The API provides a list of English nouns and allows users to specify criteria such as word length, starting and ending letters, and contains. Additionally, the API can be used in other projects depending on their specific needs.
+This web application, built with React, utilizes an external `API endpoint written in PHP` to generate a random word based on selected settings. The endpoint accepts the following query parameters:
 
-The tests for this application are written using `Cypress`, a popular end-to-end testing framework for web applications. I chose Cypress because it can write both component and end tests, which allowed me to do in-depth application testing.
+- `minLength` - Specifies the minimum length of the word to generate.
+- `maxLength` - Specifies the maximum length of the word to generate.
+- `startsWith` - Specifies that the generated word must start with the provided string.
+- `endsWith` - Specifies that the generated word must end with the provided string.
+- `contains` - Specifies that the generated word must contain the provided string.
 
-Component tests test individual components of the application, ensuring that each component works as expected. End-to-end tests test the entire application by simulating user interactions, and ensuring that the application behaves as expected. I used both types of tests to ensure comprehensive testing of the application.
+The API endpoint filters the list of English nouns based on the provided query parameters and returns a random word that matches the selected criteria. In case of an error, it will return an error message with status code 400. Additionally, the API can be used in other projects depending on the specific needs.
+The API endpoint uses an `AbortController` to cancel any pending requests in case the user navigates away from the page or initiates a new request before the previous one has completed. This helps to prevent unnecessary network requests and improve the overall performance of the application.
 
-In the project, `mixins` is used to maintain a responsive design, reduce code duplication, and make the code more efficient and easier to maintain in the future.
-Additionally, the project uses a `screen reader` to support website accessibility for people with disabilities, ensuring equal access to information for all users, including those with visual or hearing impairments.
-The project uses `Bootstrap`, which is a popular CSS framework providing ready-made components and styles for easier and faster web application development, improving the design and functionality of the project while ensuring cross-browser compatibility.
-Moreover, all styles in the project are written in `SCSS` (Sass) to achieve easier and convenient management of web application styles. SCSS offers variables, functions, and nested selectors to reduce code duplication and make it easier to write CSS. Additionally, the separation of styles into smaller and more maintainable files through SCSS makes the project more organized and manageable.
+In the project, `mixins` are used to maintain a responsive design, reduce code duplication, and make the code more efficient and easier to maintain in the future.
+Additionally, the project supports `screen readers` for people with disabilities, ensuring equal access to information for all users, including those with visual or hearing impairments.
+The project uses `Bootstrap` reboot module to provide normalization of CSS styles and better compatibility between different web browsers.
+Additionally, the separation of styles into smaller and more maintainable files through `SCSS` makes the project more organized and manageable.
+
+The `classnames` helper function is useful when working with React components because it provides an easy way to concatenate and match the classes of HTML elements in components. The function concatenates only those arguments that have the value true, putting a space between them, making the generated class list more precise and easier to understand.
+
+In the added rules "react-hooks/rules-of-hooks" and "react-hooks/exhaustive-deps" use `exhaustive`, which ensures that all dependencies used in hooks are clearly declared for each component. This helps avoid potential bugs and unwanted side effects by ensuring that components are properly optimized and will function predictably.
+
 Different environment variables are used for different stages of `development`, `testing`, and `production`, enhancing the flexibility and security of the application.
+
+## :sparkles: Testing
+
+The tests for this application are written using `Cypress`, a popular end-to-end testing framework for web applications. I chose Cypress because it can write both component and end-to-end tests, which allowes doing an in-depth application testing.
+
+Component tests tests individual components of the application, ensuring that each component works as expected. End-to-end tests test the entire application by simulating user interactions, and ensuring that the application behaves as expected. Both types were used to ensure comprehensive testing of the application.
 
 ## :woman_juggling: Available Scripts
 
@@ -43,7 +61,7 @@ Runs the application tests.
 
 #### `npm run build`
 
-Runs validate, builds the app for production to the `build` folder.
+Runs validation, builds the app for production to the `build` folder.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the file names include the hashes.
