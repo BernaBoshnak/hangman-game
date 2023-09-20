@@ -2,6 +2,8 @@
 
 This is a Hangman Game application built using `React`.
 
+Demo [link](https://hangman-game-88c4d.web.app/)
+
 ## :scroll: Description
 
 Hangman is a word recognition game where the player has to guess the secret word by suggesting letters and having a certain number of attempts. The game selects a random word from a predefined list and displays it as a row of empty boxes. If the player guesses a letter from the word, it replaces the corresponding empty box. Otherwise a part of the human body gets filled, starting with the head. In this version of the game, the man has 6 pieces. The player wins if they succeeds in guessing all the letters of the word before exhausting all the attempts, and loses if otherwise.
