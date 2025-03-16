@@ -1,5 +1,5 @@
-@import '../../styles/bootstrap.scss';
-@import '../../styles/variables.scss';
+@use '../../styles/bootstrap.scss' as bootsrap;
+@use '../../styles/variables.scss' as vars;
 
 .character {
   position: absolute;
@@ -84,17 +84,17 @@
   }
 
   &-fill {
-    background-color: $color-character;
+    background-color: vars.$color-character;
   }
 
   &-line {
-    border: 1px dashed $color-character;
+    border: 1px dashed vars.$color-character;
     box-shadow: 0 0 5px 0px rgba(0,0,0,.3);
   }
 }
 
 .body-part-description {
-  @include visually-hidden;
+  @include bootsrap.visually-hidden;
 }
 
 @keyframes left-arm-animation {

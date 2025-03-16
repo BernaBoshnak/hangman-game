@@ -1,23 +1,23 @@
-@import '../styles/variables.scss';
-@import '../styles/mixins/responsive.scss';
-@import '../styles/utils/calc.scss';
+@use '../styles/variables.scss' as vars;
+@use '../styles/mixins/responsive.scss' as resp;
+@use '../styles/utils/calc.scss' as calc;
 
 .alert {
-  margin: 0 auto rem-calc(36px);
-  padding: rem-calc(16px) rem-calc(80px);
+  margin: 0 auto calc.rem-calc(36px);
+  padding: calc.rem-calc(16px) calc.rem-calc(80px);
   border-radius: 8px;
-  font-size: rem-calc(20px);
+  font-size: calc.rem-calc(20px);
   text-align: center;
-  color: $color-primary;
-  background-color: $color-light;
-  border: 2px solid $color-primary;
+  color: vars.$color-primary;
+  background-color: vars.$color-light;
+  border: 2px solid vars.$color-primary;
 
-  @include media-breakpoint-down(lg) {
-    padding: rem-calc(16px) rem-calc(40px);
+  @include resp.media-breakpoint-down(lg) {
+    padding: calc.rem-calc(16px) calc.rem-calc(40px);
   }
 
-  @include media-breakpoint-down(sm) {
-    padding: rem-calc(16px) rem-calc(16px);
-    font-size: rem-calc(16px);
+  @include resp.media-breakpoint-down(sm) {
+    padding: calc.rem-calc(16px) calc.rem-calc(16px);
+    font-size: calc.rem-calc(16px);
   }
 }

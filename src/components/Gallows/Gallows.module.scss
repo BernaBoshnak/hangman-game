@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@use '../../styles/variables.scss' as vars;
 
 .gallows {
   $size: 7%;
@@ -15,7 +15,7 @@
   &-common {
     position: absolute;
     width: $size;
-    background-color: $gallows-bg;
+    background-color: vars.$gallows-bg;
     box-shadow: inset -2px 0 5px -2px #000;
   }
 
@@ -55,7 +55,7 @@
     height: 20%;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    background: repeating-linear-gradient(60deg, $gallows-bg 35%, #e6bf83 45%);
+    background: repeating-linear-gradient(60deg, vars.$gallows-bg 35%, #e6bf83 45%);
     box-shadow: inset -2px 0 2px -2px #000;
   }
 }

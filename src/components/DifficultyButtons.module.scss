@@ -1,6 +1,6 @@
-@import '../styles/variables.scss';
-@import '../styles/mixins/responsive.scss';
-@import '../styles/utils/calc.scss';
+@use '../styles/variables.scss' as vars;
+@use '../styles/mixins/responsive.scss' as resp;
+@use '../styles/utils/calc.scss' as calc;
 
 .buttonsContainer {
   display: flex;
@@ -11,26 +11,26 @@
 }
 
 .button {
-  padding: rem-calc(4px) rem-calc(24px);
+  padding: calc.rem-calc(4px) calc.rem-calc(24px);
   border: none;
   border-radius: 5px;
-  font-size: rem-calc(32px);
+  font-size: calc.rem-calc(32px);
   letter-spacing: 1px;
   text-align: center;
-  color: $color-light;
-  background-color: $color-primary;
+  color: vars.$color-light;
+  background-color: vars.$color-primary;
 
-  @include media-breakpoint-down(lg) {
-    font-size: rem-calc(26px);
+  @include resp.media-breakpoint-down(lg) {
+    font-size: calc.rem-calc(26px);
   }
 
-  @include media-breakpoint-down(sm) {
-    font-size: rem-calc(16px);
+  @include resp.media-breakpoint-down(sm) {
+    font-size: calc.rem-calc(16px);
   }
 }
 
 .button:hover {
-  color: $color-primary;
-  background-color: $color-light;
+  color: vars.$color-primary;
+  background-color: vars.$color-light;
   transition: 0.3s ease-in-out all;
 }

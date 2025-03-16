@@ -1,4 +1,4 @@
-@import 'bootstrap';
+@use 'bootstrap' as bs;
 
 // Custom
-@import 'styles';
+@use 'styles' as custom;

@@ -1,75 +1,74 @@
-@import '../../styles/variables.scss';
-@import '../../styles/mixins/responsive.scss';
-@import '../../styles/utils/calc.scss';
+@use '../../styles/variables.scss' as vars;
+@use '../../styles/mixins/responsive.scss' as resp;
+@use '../../styles/utils/calc.scss' as calc;
 
 .container {
   margin: 0 auto;
-  padding: rem-calc(18px);
-  width: 230px;
+  padding: calc.rem-calc(18px);
   border-radius: 50%;
   text-align: center;
   overflow: hidden;
 
-  @include media-breakpoint-down(lg) {
+  @include resp.media-breakpoint-down(lg) {
     width: 180px;
-    padding: rem-calc(12px);
-    margin: rem-calc(18px) auto 0;
+    padding: calc.rem-calc(12px);
+    margin: calc.rem-calc(18px) auto 0;
   }
 }
 
 .gameText {
-  padding: rem-calc(8px) rem-calc(4px) 0;
-  font-size: rem-calc(24px);
+  padding: calc.rem-calc(8px) calc.rem-calc(4px) 0;
+  font-size: calc.rem-calc(24px);
   font-weight: bold;
   letter-spacing: 1px;
   color: #3a3a3a;
 
-  @include media-breakpoint-down(lg) {
-    font-size: rem-calc(18px);
+  @include resp.media-breakpoint-down(lg) {
+    font-size: calc.rem-calc(18px);
   }
 }
 
 .button {
-  padding: rem-calc(8px) rem-calc(16px);
+  padding: calc.rem-calc(8px) calc.rem-calc(16px);
   border: none;
-  font-size: rem-calc(18px);
+  font-size: calc.rem-calc(18px);
   border-radius: 50%;
   letter-spacing: 0.5px;
-  color: $color-light;
-  background-color: $color-secondary;
-  box-shadow: inset 0 0 3px $color-dark-shadow;
+  color: vars.$color-light;
+  background-color: vars.$color-secondary;
+  box-shadow: inset 0 0 3px vars.$color-dark-shadow;
 
   &:hover {
-    color: $color-secondary;
-    background-color: $color-light;
-    box-shadow: inset 0 0 3px $color-secondary;
+    color: vars.$color-secondary;
+    background-color: vars.$color-light;
+    box-shadow: inset 0 0 3px vars.$color-secondary;
     transition: 0.3s ease-in-out all;
   }
 
-  @include media-breakpoint-down(lg) {
-    font-size: rem-calc(14px);
+  @include resp.media-breakpoint-down(lg) {
+    font-size: calc.rem-calc(14px);
   }
 }
 
 .win {
-  background-color: $color-primary;
-  box-shadow: inset 0 0 5px $color-ligh-shadow;
+  background-color: vars.$color-primary;
+  box-shadow: inset 0 0 5px vars.$color-ligh-shadow;
 }
 
 .lose {
-  background-color: $color-light;
+  background-color: vars.$color-light;
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
 
   .button {
-    color: $color-light;
-    background-color: $color-primary;
-    box-shadow: inset 0 0 3px $color-dark-shadow;
+    color: vars.$color-light;
+    background-color: vars.$color-primary;
+    box-shadow: inset 0 0 3px vars.$color-dark-shadow;
   }
 
   .button:hover {
-    color: $color-primary;
-    background-color: $color-light;
-    box-shadow: inset 0 0 3px $color-primary;
+    color: vars.$color-primary;
+    background-color: vars.$color-light;
+    box-shadow: inset 0 0 3px vars.$color-primary;
     transition: 0.3s ease-in-out all;
   }
 }
