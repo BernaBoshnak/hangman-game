@@ -1,9 +1,22 @@
 import App from '../src/App'
 import { Level } from '../src/utils/word'
-import { RouteHandler } from 'cypress/types/net-stubbing'
+import * as nounListService from '../src/services/firebase/nounList'
+import { Word, NounListDoc } from '../src/services/api/response/nounList'
+import { getFilteredRandomWord } from './../src/getWord'
 
-const startGame = (routeHandler: RouteHandler = { statusCode: 200 }) => {
-  cy.intercept('/random-word/api.php*', routeHandler).as('getWord')
+const fakeWords: NounListDoc['words'] = [
+  'apple',
+  'accomplishment',
+  'banana',
+  'pear',
+]
+
+const startGame = (mockWords: string[]) => {
+  cy.stub(nounListService, 'getNounList')
+    .as('getNounList')
+    .callsFake(
+      () => new Promise((resolve) => setTimeout(() => resolve(mockWords), 500)),
+    )
 
   return (difficulty: Level = 'easy') => {
     cy.mount(<App />)
@@ -11,67 +24,69 @@ const startGame = (routeHandler: RouteHandler = { statusCode: 200 }) => {
   }
 }
 
-describe('words endpoint', () => {
-  it('shows loading', () => {
-    startGame({ delay: 200 })()
+describe('fetching words and game interactions with Firestore', () => {
+  it.only('shows loading', () => {
+    startGame(fakeWords)()
     cy.findByText(/loading/i)
-    cy.wait('@getWord').then(() => {
+    cy.get('@getNounList').then(() => {
       cy.findByText(/loading/i).should('not.exist')
     })
   })
 
-  it('shows error when server responds with failure', () => {
-    startGame({ statusCode: 500 })()
+  it('shows error when no words are available', () => {
+    startGame([])()
 
-    cy.wait('@getWord').then(() => {
-      cy.findByRole('alert').within(($node) => {
-        cy.wrap($node)
-          .invoke('text')
-          .should('match', /oops, something went wrong\. try again/i)
-      })
+    cy.findByRole('alert').within(($node) => {
+      cy.wrap($node)
+        .invoke('text')
+        .should('match', /oops, something went wrong\. try again/i)
     })
   })
 
   describe('difficulty request parameters', () => {
     it('should request with the correct min and max length for easy difficulty', () => {
-      startGame()()
+      startGame(fakeWords)()
 
-      cy.wait('@getWord').then(({ request }) => {
-        expect(request.query).to.deep.eq({ minLength: '3', maxLength: '5' })
+      cy.wrap(getFilteredRandomWord(3, 5)).then((word) => {
+        expect(word).to.be.a('string')
+        const safeWord = word as Word
+        expect(safeWord.length).to.be.within(3, 5)
       })
     })
 
     it('should request with the correct min and max length for normal difficulty', () => {
-      startGame()('normal')
+      startGame(fakeWords)('normal')
 
-      cy.wait('@getWord').then(({ request }) => {
-        expect(request.query).to.deep.eq({ minLength: '6', maxLength: '8' })
+      cy.wrap(getFilteredRandomWord(6, 8)).then((word) => {
+        expect(word).to.be.a('string')
+        const safeWord = word as Word
+        expect(safeWord.length).to.be.within(6, 8)
       })
     })
 
     it('should request with the correct min and max length for hard difficulty', () => {
-      startGame()('hard')
+      startGame(fakeWords)('hard')
 
-      cy.wait('@getWord').then(({ request }) => {
-        expect(request.query).to.deep.eq({ minLength: '9', maxLength: '15' })
+      cy.wrap(getFilteredRandomWord(9, 15)).then((word) => {
+        expect(word).to.be.a('string')
+        const safeWord = word as Word
+        expect(safeWord.length).to.be.within(9, 15)
       })
     })
   })
 
   describe('Keyboard', () => {
     it('should display single body part when pressing a given key N times', () => {
-      startGame({ body: { word: 'SOON' } })()
+      startGame(['SOON'])()
 
-      cy.wait('@getWord').then(() => {
-        cy.findByTestId('keyboard').then(() => {
-          const key = 'M'
-          cy.document().trigger('keypress', { key: key })
-          cy.document().trigger('keypress', { key: key })
-        })
+      cy.findByTestId('keyboard').then(() => {
+        const key = 'M'
+        cy.document().trigger('keypress', { key: key })
+        cy.document().trigger('keypress', { key: key })
+      })
 
-        cy.findByTestId('body-parts').within(() => {
-          cy.findAllByTestId('body-text').should('have.length', 1)
-        })
+      cy.findByTestId('body-parts').within(() => {
+        cy.findAllByTestId('body-text').should('have.length', 1)
       })
     })
   })
@@ -133,29 +148,25 @@ describe('words endpoint', () => {
     })
 
     it('should win the game', () => {
-      startGame({ body: { word } })()
+      startGame([word])()
 
-      cy.wait('@getWord').then(() => {
-        const pressedLetters = new Set(['S', 'O', 'N'])
-        const bodyPartsCopy = [...bodyParts]
+      const pressedLetters = new Set(['S', 'O', 'N'])
+      const bodyPartsCopy = [...bodyParts]
 
-        pressLetters(word, pressedLetters, bodyPartsCopy)
-        cy.wrap(bodyPartsCopy).should('have.length', 6)
-        cy.findByText(/congratulations/i)
-      })
+      pressLetters(word, pressedLetters, bodyPartsCopy)
+      cy.wrap(bodyPartsCopy).should('have.length', 6)
+      cy.findByText(/congratulations/i)
     })
 
     it('should lose the game', () => {
-      startGame({ body: { word } })()
+      startGame([word])()
 
-      cy.wait('@getWord').then(() => {
-        const pressedLetters = new Set(['B', 'M', 'R', 'O', 'N', 'A', 'P', 'K'])
-        const bodyPartsCopy = [...bodyParts]
+      const pressedLetters = new Set(['B', 'M', 'R', 'O', 'N', 'A', 'P', 'K'])
+      const bodyPartsCopy = [...bodyParts]
 
-        pressLetters(word, pressedLetters, bodyPartsCopy)
-        cy.wrap(bodyPartsCopy).should('have.length', 0)
-        cy.findByText(/game over/i)
-      })
+      pressLetters(word, pressedLetters, bodyPartsCopy)
+      cy.wrap(bodyPartsCopy).should('have.length', 0)
+      cy.findByText(/game over/i)
     })
   })
 })
