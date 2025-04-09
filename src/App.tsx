@@ -8,7 +8,7 @@ import GameOver from './components/GameOver/GameOver'
 import DifficultyButtons from './components/DifficultyButtons'
 import ErrorMessage from './components/ErrorMessage'
 import Loading from './components/Loading'
-import getWordFromApi from './fetchWord'
+import getFilteredRandomWord from './getWord'
 import hangmanStyles from './components/HangmanContainer.module.scss'
 import './styles/index.scss'
 import { classnames as cn } from './utils/classnames'
@@ -30,7 +30,7 @@ function App() {
     const { minLength, maxLength } = getWordLengths(difficulty)
 
     try {
-      const word = await getWordFromApi(minLength, maxLength)
+      const word = await getFilteredRandomWord(minLength, maxLength)
 
       if (!word) {
         setRandomWordFound(false)
