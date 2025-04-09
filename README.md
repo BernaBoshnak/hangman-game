@@ -12,24 +12,25 @@ Hangman is a word recognition game where the player has to guess the secret word
 
 - React
 - TypeScript
-- PHP
+- Firebase (Firestore)
+- Cypress
 - HTML5
 - SCSS (CSS modules)
 - ESlint
-- Cypress
+- Git
+- Bootstrap
+- Prettier
 
 ## :pencil: Technical details
 
-This web application, built with React, utilizes an external `API endpoint written in PHP` to generate a random word based on selected settings. The endpoint accepts the following query parameters:
+This web application, built with `React` and `TypeScript`, now uses `Firebase Firestore` to retrieve a list of nouns and generate a random word based on selected length constraints. Instead of relying on an external API endpoint written in PHP, the app fetches the word list directly from Firestore. The filtering logic is applied on the client side based on the following parameters:
 
-- `minLength` - Specifies the minimum length of the word to generate.
-- `maxLength` - Specifies the maximum length of the word to generate.
-- `startsWith` - Specifies that the generated word must start with the provided string.
-- `endsWith` - Specifies that the generated word must end with the provided string.
-- `contains` - Specifies that the generated word must contain the provided string.
+- `minLength` - Specifies the minimum length of the word to select.
+- `maxLength` - Specifies the maximum length of the word to select.
 
-The API endpoint filters the list of English nouns based on the provided query parameters and returns a random word that matches the selected criteria. In case of an error, it will return an error message with status code 400. Additionally, the API can be used in other projects depending on the specific needs.
-The API endpoint uses an `AbortController` to cancel any pending requests in case the user navigates away from the page or initiates a new request before the previous one has completed. This helps to prevent unnecessary network requests and improve the overall performance of the application.
+The application retrieves the list of English nouns from a `Firestore collection` and then filters it according to the provided length criteria. If the filtered list is not empty, a random word is chosen; otherwise, the function returns null. This approach ensures that words are dynamically selected from the stored list and that the process can be easily adapted or extended for other projects.
+
+All environment-specific settings, including Firebase credentials, are managed through dedicated environment files `(.env, .env.example, and .env.test)`, enhancing the flexibility and security of the application.
 
 In the project, `mixins` are used to maintain a responsive design, reduce code duplication, and make the code more efficient and easier to maintain in the future.
 Additionally, the project supports `screen readers` for people with disabilities, ensuring equal access to information for all users, including those with visual or hearing impairments.
