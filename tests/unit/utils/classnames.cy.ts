@@ -1,4 +1,4 @@
-import { classnames } from '../../src/utils/classnames'
+import { classnames } from '../../../src/utils/classnames'
 
 describe('classnames util', () => {
   it('returns an empty string when called with no arguments', () => {

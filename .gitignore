@@ -21,3 +21,5 @@ yarn-error.log*
 
 # tests
 /cypress/videos
+/cypress/downloads
+/cypress/screenshots
